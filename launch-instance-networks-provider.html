@@ -1,0 +1,599 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Provider network &#8212; Installation Guide  documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/basic.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <link rel="canonical" href="/openstack-manuals-install-guide/launch-instance-networks-provider.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Self-service network" href="launch-instance-networks-selfservice.html" />
+    <link rel="prev" title="Launch an instance" href="launch-instance.html" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Bootstrap CSS -->
+<link href="_static/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Fonts -->
+<link href="_static/css/font-awesome.min.css" rel="stylesheet">
+
+<!-- Custom CSS -->
+<link href="_static/css/combined.css" rel="stylesheet">
+
+<!-- Search CSS -->
+<link href="_static/css/search.css" rel="stylesheet">
+
+<!-- Pygments CSS -->
+<link href="_static/pygments.css" rel="stylesheet">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-17511903-1', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+  </head><body>
+
+<!-- SOURCE_FILE: https://opendev.org/openstack/openstack-manuals/src/doc/install-guide/source/launch-instance-networks-provider.rst -->
+
+<script>
+    (function (window, document) {
+        var loader = function () {
+            var script = document.createElement("script"), tag = document.getElementsByTagName("script")[0];
+            script.src = "https://search.openstack.org/widget/embed.min.js?t="+Date.now();
+            tag.parentNode.insertBefore(script, tag);
+        };
+        window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
+    })(window, document);
+</script>
+
+<nav class="navbar navbar-default" role="navigation">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button class="navbar-toggle" data-target="#bs-example-navbar-collapse-1" data-toggle="collapse" type="button">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="brand-wrapper">
+        <a class="navbar-brand" href="https://www.openstack.org/"></a>
+      </div>
+      <div class="search-icon show"><i class="fa fa-search"></i> Search</div></div>
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <div class="search-container tiny">
+    <div class="openstack-search-bar" data-baseUrl="search.openstack.org" data-context="docs-openstack"></div>
+</div>
+      <ul class="nav navbar-nav navbar-main show">
+        <li class="search-container-mobile">
+    <div class="openstack-search-bar" data-baseUrl="search.openstack.org" data-context="docs-openstack"></div>
+</li>
+        <li> <!--Software -->
+          <a href="https://www.openstack.org/software/" class="drop" id="dropdownMenuSoftware">Software <i class="fa fa-caret-down"></i></a>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuSoftware">
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/software/">Overview</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/software/project-navigator/openstack-components">OpenStack Components</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/software/project-navigator/sdks">SDKs</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/software/project-navigator/deployment-tools">Deployment Tools</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/assets/software/projectmap/openstack-map.pdf" target="_blank">OpenStack Map</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/software/sample-configs/">Sample Configs</a></li>
+          </ul>
+        </li>
+        <li> <!-- Use Cases -->
+          <a href="https://www.openstack.org/use-cases/" class="drop" id="dropdownMenuUsers">Use Cases <i class="fa fa-caret-down"></i></a>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuUsers">
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/use-cases/">Users in Production</a></li>
+            <li role="presentation" class="divider"></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/use-cases/bare-metal/">Ironic Bare Metal</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/use-cases/edge-computing/">Edge Computing</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/use-cases/telecoms-and-nfv/">Telecom & NFV</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/use-cases/science/">Science and HPC</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/use-cases/containers/">Containers</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/use-cases/enterprise/">Enterprise</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/surveys/landing">User Survey</a></li>
+          </ul>
+        </li>
+        <li> <!-- Events -->
+          <a href="https://www.openstack.org/events/" class="drop" id="dropdownMenuEvents">Events <i class="fa fa-caret-down"></i></a>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuEvents">
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/summit/">Open Infrastructure Summits</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/ptg/">Project Teams Gathering</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/events/opendev-2020/">OpenDev</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/events/community-events/">Community Events</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/events/openstackdays">OpenStack & OpenInfra Days</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/videos/">Summit Videos</a></li>
+          </ul>
+        </li>
+        <li><!-- Community -->
+          <a href="https://www.openstack.org/community/" class="drop" id="dropdownMenuCommunity">Community <i class="fa fa-caret-down"></i></a>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuCommunity">
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/community/">Welcome! Start Here</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/community/tech-committee">OpenStack Technical Committee</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/community/speakers/">Speakers Bureau</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="http://wiki.openstack.org">OpenStack Wiki</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/coa/">Get Certified (COA)</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/community/jobs/">Jobs</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/marketing/">Marketing Resources</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/news/">Community News</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="http://superuser.openstack.org">Superuser Magazine</a></li>
+            <li role="presentation" class="divider"></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/community/supporting-organizations/">OpenInfra Foundation Supporting Organizations</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://openinfra.dev">Open Infrastructure Foundation (OpenInfra Foundation)</a></li>
+          </ul>
+        </li>
+        <li><!-- Marketplace -->
+          <a href="https://www.openstack.orgmarketplace/" class="drop" id="dropdownMenuLearn">Marketplace <i class="fa fa-caret-down"></i></a>
+          <ul class="dropdown-menu dropdown-hover" role="menu" aria-labelledby="dropdownMenuEvents">
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/marketplace/training/">Training</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/marketplace/distros/">Distros & Appliances</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/marketplace/public-clouds/">Public Clouds</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/marketplace/hosted-private-clouds/">Hosted Private Clouds</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/marketplace/remotely-managed-private-clouds/">Remotely Managed Private Clouds</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/marketplace/consulting/">Consulting & Integrators</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/marketplace/drivers/">Drivers</a></li>
+          </ul>
+        </li>
+        <li><!-- Blog -->
+          <a href="https://www.openstack.org/blog/">Blog</a>
+        </li>
+        <li><!-- Docs -->
+          <a href="http://docs.openstack.org/">Docs</a>
+        </li>
+        <li> <!-- Join -->
+            <li class="join-nav-section">
+              <a href="https://openinfra.dev/join/" id="dropdownMenuJoin">Join <i class="fa fa-caret-down"></i></a>
+              <ul class="dropdown-menu dropdown-hover" role="menu" aria-labelledby="dropdownMenuJoin" style="display: none;">
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="https://openinfra.dev/join/">Sign up for Foundation Membership</a></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="https://openinfra.dev/join/">Sponsor the Foundation</a></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="https://openinfra.dev">More about the Foundation</a></li>
+              </ul>
+            </li>
+            <li>
+              <a href="https://www.openstack.org/Security/login/?BackURL=/home/" class="sign-in-btn">Log In</a>
+            </li>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- /.container -->
+</nav>
+
+    <div class="container docs-book-wrapper">
+      <div class="row">
+        <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4">
+<div class="row docs-title">
+  <div class="col-lg-8">
+      <h1>Provider network</h1>
+    
+  </div>
+  <div class="docs-actions">
+    
+    <a href="launch-instance.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Launch an instance"></i></a>
+    
+    
+    <a href="launch-instance-networks-selfservice.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Self-service network"></i></a>
+    
+    <a id="pdfLink1" href="" target="_blank" title="Download the manuals as PDF"><i class="fa fa-file-pdf-o" data-toggle="tooltip" data-placement="top" title="Download PDF"></i></a>
+    
+    <a id="logABugLink1" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+    
+  </div>
+</div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="docs-body" role="main">
+
+  <section id="provider-network">
+<span id="launch-instance-networks-provider"></span><h1>Provider network<a class="headerlink" href="#provider-network" title="Permalink to this heading">¶</a></h1>
+<p>Before launching an instance, you must create the necessary virtual network
+infrastructure. For networking option 1, an instance uses a provider
+(external) network that connects to the physical network infrastructure via
+layer-2 (bridging/switching). This network includes a DHCP server that
+provides IP addresses to instances.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">admin</span></code> or other privileged user must create this network because it
+connects directly to the physical network infrastructure.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The following instructions and diagrams use example IP address ranges. You
+must adjust them for your particular environment.</p>
+</div>
+<figure class="align-default" id="id1">
+<img alt="Networking Option 1: Provider networks - Overview" src="_images/network1-overview.png" />
+<figcaption>
+<p><span class="caption-text"><strong>Networking Option 1: Provider networks - Overview</strong></span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="id2">
+<img alt="Networking Option 1: Provider networks - Connectivity" src="_images/network1-connectivity.png" />
+<figcaption>
+<p><span class="caption-text"><strong>Networking Option 1: Provider networks - Connectivity</strong></span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<section id="create-the-provider-network">
+<h2>Create the provider network<a class="headerlink" href="#create-the-provider-network" title="Permalink to this heading">¶</a></h2>
+<ol class="arabic">
+<li><p>On the controller node, source the <code class="docutils literal notranslate"><span class="pre">admin</span></code> credentials to gain access to
+admin-only CLI commands:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>. admin-openrc
+</pre></div>
+</div>
+</li>
+<li><p>Create the network:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>openstack network create  --share --external <span class="se">\</span>
+  --provider-physical-network provider <span class="se">\</span>
+  --provider-network-type flat provider
+
+<span class="go">Created a new network:</span>
+
+<span class="go">+---------------------------+--------------------------------------+</span>
+<span class="go">| Field                     | Value                                |</span>
+<span class="go">+---------------------------+--------------------------------------+</span>
+<span class="go">| admin_state_up            | UP                                   |</span>
+<span class="go">| availability_zone_hints   |                                      |</span>
+<span class="go">| availability_zones        |                                      |</span>
+<span class="go">| created_at                | 2017-03-14T14:37:39Z                 |</span>
+<span class="go">| description               |                                      |</span>
+<span class="go">| dns_domain                | None                                 |</span>
+<span class="go">| id                        | 54adb94a-4dce-437f-a33b-e7e2e7648173 |</span>
+<span class="go">| ipv4_address_scope        | None                                 |</span>
+<span class="go">| ipv6_address_scope        | None                                 |</span>
+<span class="go">| is_default                | None                                 |</span>
+<span class="go">| mtu                       | 1500                                 |</span>
+<span class="go">| name                      | provider                             |</span>
+<span class="go">| port_security_enabled     | True                                 |</span>
+<span class="go">| project_id                | 4c7f48f1da5b494faaa66713686a7707     |</span>
+<span class="go">| provider:network_type     | flat                                 |</span>
+<span class="go">| provider:physical_network | provider                             |</span>
+<span class="go">| provider:segmentation_id  | None                                 |</span>
+<span class="go">| qos_policy_id             | None                                 |</span>
+<span class="go">| revision_number           | 3                                    |</span>
+<span class="go">| router:external           | External                             |</span>
+<span class="go">| segments                  | None                                 |</span>
+<span class="go">| shared                    | True                                 |</span>
+<span class="go">| status                    | ACTIVE                               |</span>
+<span class="go">| subnets                   |                                      |</span>
+<span class="go">| updated_at                | 2017-03-14T14:37:39Z                 |</span>
+<span class="go">+---------------------------+--------------------------------------+</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">--share</span></code> option allows all projects to use the virtual network.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">--external</span></code> option defines the virtual network to be external. If
+you wish to create an internal network, you can use <code class="docutils literal notranslate"><span class="pre">--internal</span></code> instead.
+Default value is <code class="docutils literal notranslate"><span class="pre">internal</span></code>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">--provider-physical-network</span> <span class="pre">provider</span></code> and
+<code class="docutils literal notranslate"><span class="pre">--provider-network-type</span> <span class="pre">flat</span></code> options connect the flat virtual network
+to the flat (native/untagged) physical network on the <code class="docutils literal notranslate"><span class="pre">eth1</span></code> interface
+on the host using information from the following files:</p>
+<p><code class="docutils literal notranslate"><span class="pre">ml2_conf.ini</span></code>:</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[ml2_type_flat]</span><span class="w"></span>
+<span class="na">flat_networks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">provider</span><span class="w"></span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">linuxbridge_agent.ini</span></code>:</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[linux_bridge]</span><span class="w"></span>
+<span class="na">physical_interface_mappings</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">provider:eth1</span><span class="w"></span>
+</pre></div>
+</div>
+</li>
+<li><p>Create a subnet on the network:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>openstack subnet create --network provider <span class="se">\</span>
+  --allocation-pool <span class="nv">start</span><span class="o">=</span>START_IP_ADDRESS,end<span class="o">=</span>END_IP_ADDRESS <span class="se">\</span>
+  --dns-nameserver DNS_RESOLVER --gateway PROVIDER_NETWORK_GATEWAY <span class="se">\</span>
+  --subnet-range PROVIDER_NETWORK_CIDR provider
+</pre></div>
+</div>
+<p>Replace <code class="docutils literal notranslate"><span class="pre">PROVIDER_NETWORK_CIDR</span></code> with the subnet on the provider
+physical network in CIDR notation.</p>
+<p>Replace <code class="docutils literal notranslate"><span class="pre">START_IP_ADDRESS</span></code> and <code class="docutils literal notranslate"><span class="pre">END_IP_ADDRESS</span></code> with the first and
+last IP address of the range within the subnet that you want to allocate
+for instances. This range must not include any existing active IP
+addresses.</p>
+<p>Replace <code class="docutils literal notranslate"><span class="pre">DNS_RESOLVER</span></code> with the IP address of a DNS resolver. In
+most cases, you can use one from the <code class="docutils literal notranslate"><span class="pre">/etc/resolv.conf</span></code> file on
+the host.</p>
+<p>Replace <code class="docutils literal notranslate"><span class="pre">PROVIDER_NETWORK_GATEWAY</span></code> with the gateway IP address on the
+provider network, typically the “.1” IP address.</p>
+<p><strong>Example</strong></p>
+<p>The provider network uses 203.0.113.0/24 with a gateway on 203.0.113.1.
+A DHCP server assigns each instance an IP address from 203.0.113.101
+to 203.0.113.250. All instances use 8.8.4.4 as a DNS resolver.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>openstack subnet create --network provider <span class="se">\</span>
+  --allocation-pool <span class="nv">start</span><span class="o">=</span><span class="m">203</span>.0.113.101,end<span class="o">=</span><span class="m">203</span>.0.113.250 <span class="se">\</span>
+  --dns-nameserver <span class="m">8</span>.8.4.4 --gateway <span class="m">203</span>.0.113.1 <span class="se">\</span>
+  --subnet-range <span class="m">203</span>.0.113.0/24 provider
+
+<span class="go">Created a new subnet:</span>
+<span class="go">+-------------------+--------------------------------------+</span>
+<span class="go">| Field             | Value                                |</span>
+<span class="go">+-------------------+--------------------------------------+</span>
+<span class="go">| allocation_pools  | 203.0.113.101-203.0.113.250          |</span>
+<span class="go">| cidr              | 203.0.113.0/24                       |</span>
+<span class="go">| created_at        | 2017-03-29T05:48:29Z                 |</span>
+<span class="go">| description       |                                      |</span>
+<span class="go">| dns_nameservers   | 8.8.4.4                              |</span>
+<span class="go">| enable_dhcp       | True                                 |</span>
+<span class="go">| gateway_ip        | 203.0.113.1                          |</span>
+<span class="go">| host_routes       |                                      |</span>
+<span class="go">| id                | e84b4972-c7fc-4ce9-9742-fdc845196ac5 |</span>
+<span class="go">| ip_version        | 4                                    |</span>
+<span class="go">| ipv6_address_mode | None                                 |</span>
+<span class="go">| ipv6_ra_mode      | None                                 |</span>
+<span class="go">| name              | provider                             |</span>
+<span class="go">| network_id        | 1f816a46-7c3f-4ccf-8bf3-fe0807ddff8d |</span>
+<span class="go">| project_id        | 496efd248b0c46d3b80de60a309177b5     |</span>
+<span class="go">| revision_number   | 2                                    |</span>
+<span class="go">| segment_id        | None                                 |</span>
+<span class="go">| service_types     |                                      |</span>
+<span class="go">| subnetpool_id     | None                                 |</span>
+<span class="go">| updated_at        | 2017-03-29T05:48:29Z                 |</span>
+<span class="go">+-------------------+--------------------------------------+</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<p>Return to <a class="reference internal" href="launch-instance.html#launch-instance-networks"><span class="std std-ref">Launch an instance - Create virtual networks</span></a>.</p>
+</section>
+</section>
+
+
+              </div>
+            </div>
+          </div>
+          <div class="docs-actions">
+          
+            <a href="launch-instance.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Launch an instance"></i></a>
+          
+          
+            <a href="launch-instance-networks-selfservice.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Self-service network"></i></a>
+          
+          <a id="pdfLink2" href="" target="_blank" title="Download the manuals as PDF"><i class="fa fa-file-pdf-o" data-toggle="tooltip" data-placement="top" title="Download PDF"></i></a>
+          
+            <a id="logABugLink3" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+          
+          </div>
+          <div class="row docs-byline bottom">
+            <div class="docs-updated">this page last updated: 2022-12-26 10:06:33</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
+<a href="https://creativecommons.org/licenses/by/3.0/">
+ <img src="_static/images/docs/license.png" alt="Creative Commons Attribution 3.0 License"/>
+</a>
+<p>
+ Except where otherwise noted, this document is licensed under
+ <a href="https://creativecommons.org/licenses/by/3.0/">Creative Commons
+ Attribution 3.0 License</a>. See all <a href="https://www.openstack.org/legal">
+ OpenStack Legal Documents</a>.
+</p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 docs-actions-wrapper">
+            <!-- ID buglinkbottom added so that pre-filled doc bugs
+                 are sent to Launchpad projects related to the
+                 document -->
+              <a href="#" id="logABugLink2" class="docs-footer-actions"><i class="fa fa-bug"></i> found an error? report a bug</a>
+            </div>
+          </div>
+        </div>
+<div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 docs-sidebar">
+  <div class="btn-group docs-sidebar-releases">
+    <button onclick="location.href='/'" class="btn docs-sidebar-home" data-toggle="tooltip" data-placement="top" title="OpenStack Docs Home"><i class="fa fa-arrow-circle-o-left"></i></button>
+<button href="#" type="button" data-toggle="dropdown" class="btn docs-sidebar-release-select">OpenStack Documentation<i class="fa fa-caret-down"></i></button>
+    <ul class="dropdown-menu docs-sidebar-dropdown" role="menu" aria-labelledby="dLabel">
+      <li role="presentation" class="dropdown-header">Guides</li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/index.html#install-guides">Install Guides</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/index.html#user-guides">User Guides</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/index.html#configuration-guides">Configuration Guides</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/index.html#ops-and-admin-guides">Operations and Administration Guides</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/index.html#api-guides">API Guides</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/index.html#contributor-guides">Contributor Guides</a></li>
+      <li role="presentation" class="dropdown-header">Languages</li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/de/">Deutsch (German)</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/fr/">Français (French)</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/id/">Bahasa Indonesia (Indonesian)</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/it/">Italiano (Italian)</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/ja/">日本語 (Japanese)</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/ko_KR/">한국어 (Korean)</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/pt_BR/">Português (Portuguese)</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/tr_TR/">Türkçe (Türkiye)</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/zh_CN/">简体中文 (Simplified Chinese)</a></li>
+    </ul>
+  </div>
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="table-of-contents">
+      <a href="index.html" class="docs-sidebar-section-title"><h4>Installation Guide </h4></a>
+      <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="common/conventions.html">Conventions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preface.html">Preface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="get-started-with-openstack.html">Get started with OpenStack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="environment.html">Environment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="openstack-services.html">Install OpenStack services</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="launch-instance.html">Launch an instance</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="launch-instance.html#create-virtual-networks">Create virtual networks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="launch-instance.html#create-m1-nano-flavor">Create m1.nano flavor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="launch-instance.html#generate-a-key-pair">Generate a key pair</a></li>
+<li class="toctree-l2"><a class="reference internal" href="launch-instance.html#add-security-group-rules">Add security group rules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="launch-instance.html#id1">Launch an instance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="launch-instance.html#block-storage">Block Storage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="launch-instance.html#orchestration">Orchestration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="launch-instance.html#shared-file-systems">Shared File Systems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="firewalls-default-ports.html">Firewalls and default ports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="common/appendix.html">Appendix</a></li>
+</ul>
+
+    </div>
+
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="local-table-of-contents">
+      <h4 class="docs-sidebar-section-title">Page Contents</h4>
+      <ul>
+<li><a class="reference internal" href="#">Provider network</a><ul>
+<li><a class="reference internal" href="#create-the-provider-network">Create the provider network</a></li>
+</ul>
+</li>
+</ul>
+
+    </div>
+  </div>
+  </div>
+</div>
+      </div>
+    </div>
+<footer>
+  <div class="container">
+    <div class="row footer-links">
+      <div class="col-lg-2 col-sm-2">
+        <h3>OpenStack</h3>
+        <ul>
+          <li><a href="https://openstack.org/projects/">Projects</a></li>
+          <li><a href="https://www.openstack.org/software/security/">OpenStack Security</a></li>
+          <li><a href="https://openstack.org/projects/openstack-faq/">Common Questions</a></li>
+          <li><a href="https://openstack.org/blog/">Blog</a></li>g
+          <li><a href="https://openstack.org/news/">News</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Community</h3>
+        <ul>
+          <li><a href="https://openstack.org/community/">User Groups</a></li>
+          <li><a href="https://openstack.org/community/events/">Events</a></li>
+          <li><a href="https://openstack.org/community/jobs/">Jobs</a></li>
+          <li><a href="https://openstack.org/foundation/companies/">Companies</a></li>
+          <li><a href="https://docs.openstack.org/contributors">Contribute</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Documentation</h3>
+        <ul>
+          <li><a href="https://docs.openstack.org">OpenStack Manuals</a></li>
+          <li><a href="https://openstack.org/software/start/">Getting Started</a></li>
+          <li><a href="https://developer.openstack.org">API Documentation</a></li>
+          <li><a href="https://wiki.openstack.org">Wiki</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Branding & Legal</h3>
+        <ul>
+          <li><a href="https://openstack.org/brand/">Logos & Guidelines</a></li>
+          <li><a href="https://openstack.org/brand/openstack-trademark-policy/">Trademark Policy</a></li>
+          <li><a href="https://openstack.org/privacy/">Privacy Policy</a></li>
+          <li><a href="https://wiki.openstack.org/wiki/How_To_Contribute#Contributor_License_Agreement">OpenStack CLA</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-4 col-sm-4">
+        <h3>Stay In Touch</h3>
+        <a href="https://twitter.com/OpenStack" target="_blank" class="social-icons footer-twitter"></a>
+        <a href="https://www.facebook.com/openstack" target="_blank" class="social-icons footer-facebook"></a>
+        <a href="https://www.linkedin.com/company/openstack" target="_blank" class="social-icons footer-linkedin"></a>
+        <a href="https://www.youtube.com/user/OpenStackFoundation" target="_blank" class="social-icons footer-youtube"></a>
+        <p class="fine-print">
+          The OpenStack project is provided under the
+          <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 license</a>. Openstack.org is powered by
+          <a href="https://rackspace.com" target="_blank">Rackspace Cloud Computing</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- jQuery -->
+<script type="text/javascript" src="_static/js/jquery-3.2.1.min.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script type="text/javascript" src="_static/js/bootstrap.min.js"></script>
+
+<!-- The rest of the JS -->
+<script type="text/javascript" src="_static/js/navigation.js"></script>
+
+<!-- Docs JS -->
+<script type="text/javascript" src="_static/js/docs.js"></script>
+
+<!-- standard sphinx include libraries, which allow search highlighting -->
+<script type="text/javascript" src="_static/underscore.js"></script>
+<script type="text/javascript" src="_static/doctools.js"></script>
+<script type="text/javascript" src="_static/searchtools.js"></script>
+<script type="text/javascript" src="_static/language_data.js"></script>
+
+<script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    './',
+      VERSION:     '',
+      COLLAPSE_INDEX: false,
+      FILE_SUFFIX: '.html',
+      LINK_SUFFIX: '.html',
+      SOURCELINK_SUFFIX: '.txt',
+      HAS_SOURCE:  true
+    };
+</script>
+
+<!-- Javascript for page -->
+<script language="JavaScript">
+  /* Build a description of this page including SHA, source location on git
+   * repo, build time and the project's launchpad bug tag. Set the HREF of the
+   * bug buttons
+   */
+    var lineFeed = "%0A";
+    var gitURL = "Source: Can't derive source file URL";
+
+    /* there have been cases where "pagename" wasn't set; better check for it */
+    /* "giturl" is the URL of the source file on Git and is auto-generated by
+     * openstackdocstheme.
+     *
+     * "pagename" is a standard sphinx parameter containing the name of
+     * the source file, without extension.
+     */
+
+    var sourceFile = "launch-instance-networks-provider" + ".rst";
+    gitURL = "Source: https://opendev.org/openstack/openstack-manuals/src/doc/install-guide/source" + "/" + sourceFile;
+
+    /* gitsha, project and bug_tag rely on variables in conf.py */
+    var gitSha = "SHA: bf388c77ad0e3655b1c07b7f3d325a61dee86c6f";
+    var repositoryName = "openstack/openstack-manuals";
+    var bugProject = "openstack-manuals";
+    var bugTitle = "Provider network in Installation Guide";
+    var fieldTags = "install-guide";
+    var useStoryboard = "";
+
+    /* "last_updated" is the build date and time. It relies on the
+       conf.py variable "html_last_updated_fmt", which should include
+       year/month/day as well as hours and minutes                   */
+    var buildstring = "Release:  on 2022-12-26 10:06:33";
+
+    var fieldComment = encodeURI(buildstring) +
+                       lineFeed + encodeURI(gitSha) +
+                       lineFeed + encodeURI(gitURL) ;
+
+    logABug(bugTitle, bugProject, fieldComment, fieldTags, repositoryName, useStoryboard);
+    var currentSourceFile = "launch-instance-networks-provider";
+    var pdfFileName = "InstallGuide.pdf";
+    pdfLink(currentSourceFile, pdfFileName);
+</script>
+
+
+  </body>
+</html>
